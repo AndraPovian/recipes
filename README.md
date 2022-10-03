@@ -2,7 +2,8 @@
 Team Project 
 
 
-# Team 
-Dorin Povian - https://github.com/DorinPovian
-<cl>
-Andreea Toader - https://github.com/dianaat
+## Team 
+[Andrada Povian] (https://github.com/AndraPovian)
+[Dorin Povian] (https://github.com/DorinPovian)
+
+[Andreea Toader] (https://github.com/dianaat)
