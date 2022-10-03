@@ -3,5 +3,5 @@ Team Project
 
 
 # Team 
-https://github.com/DorinPovian
-https://github.com/dianaat
+Dorin Povian - https://github.com/DorinPovian
+Andreea Toader - https://github.com/dianaat
