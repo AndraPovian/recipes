@@ -21,7 +21,7 @@
   }
   
   /* Add an active class to highlight the current page */
-  .topnav a.active {
+  a.isActive {
     background-color: #04AA6D;
     color: white;
   }
