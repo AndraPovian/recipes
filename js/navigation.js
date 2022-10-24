@@ -8,6 +8,7 @@ function showPage(page){
                 document.getElementById(pages[i].id + 'Menu').classList.remove('isActive');
             } 
         } else {
+            pages[i].style.display = "block";
             if(!pages[i].className.includes('isActive')) {
                 document.getElementById(page + 'Menu').className += ' isActive';
             }
