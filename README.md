@@ -16,7 +16,7 @@ The team is divided on different components of the project, as follows:
 - CRUD on recipes
 
 <b>Andreea</b>
-- Paginated table of receipts
+- Paginated recipes
 - Project design
 
 <b>Dorin</b>
