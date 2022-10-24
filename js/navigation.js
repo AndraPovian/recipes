@@ -15,3 +15,5 @@ function showPage(page){
         }
     }
 }
+
+showPage("home");
