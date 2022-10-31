@@ -3,11 +3,9 @@ Team Project
 
 
 ## Team 
-Andrada Povian - https://github.com/AndraPovian
-<br>
-Dorin Povian - https://github.com/DorinPovian
-<br>
-Andreea Toader - https://github.com/dianaat
+- [Andrada Povian](https://github.com/AndraPovian)
+- [Dorin Povian](https://github.com/DorinPovian)
+- [Andreea Toader](https://github.com/dianaat)
 
 
 The team is divided on different components of the project, as follows:
