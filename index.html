@@ -11,7 +11,7 @@
     <!-- NAVIGATION -->
     <div class="topnav" id="myTopnav">
       <a href="#" id="homeMenu" onclick="showPage('home')"><i class="fa fa-fw fa-home"></i> Home</a>        
-      <a href="#" id="recipesMenu" onclick="showPage('recipes')"><i class="fa fa-fw fa-book"></i> Recipes</a>
+      <a href="#" id="recipesMenu" onclick="showPage('recipes'); loadRecipes();"><i class="fa fa-fw fa-book"></i> Recipes</a>
       <a href="#" id="contactMenu" onclick="showPage('contact')"><i class="fa fa-envelope"></i> Contact</a>
       <a href="#" id="aboutMenu" onclick="showPage('about')"><i class="fa fa-user"></i>  About</a>
       <a href="#" class="icon" onclick="showMenu()">
@@ -19,30 +19,10 @@
       </a>      
     </div>
 
-
-
-
     <div id="home" class="pages"></div>
 
 
-    <div id="recipes" class="pages">
-      <h2>Recipes</h2>
-      <table>
-        <tr>
-          <th>Nume</th>
-          <th>Categorie</th>
-          <th>Timp</th>
-          <th>Nivel</th>
-          <th>Ingrediente</th>
-        </tr>
-        <tr>
-          <td>Mamaliga cu Carnat</td>
-          <td>Fel Principal</td>
-          <td>30 de minute</td>
-          <td>Incepator</td>
-          <td>Faina de porumb (70 gr.), Apa, Sare, Carnat (200 gr.)</td>      
-      </table>
-    </div>
+    <div id="recipes" class="pages"></div>
     
       <!-- CONTACT PAGE -->
     <div id="contact" class="pages">      
@@ -80,7 +60,7 @@
               <p class="title">Accountant &amp; IT student</p>
               <p>Some text that describes me: With GOD all things are possible.</p>
               <p>toaderandreea10@gmail.com</p>
-              </div>
+            </div>
           </div>
         </div>
       
@@ -110,7 +90,7 @@
       </div>
     </div>
 
-    <div class="dropdown">
+    <!-- <div class="dropdown">
       <button onclick="myFunction()" class="dropbtn">Filter</button>
       <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -119,12 +99,11 @@
         <a href="#cina">Cina</a>
         <a href="#desert">Desert</a>
       </div>
-    </div>        
-      
+    </div>         -->
     
   </body>
 </html>
 
-<script src="js/recipes-table.js"></script>
 <script src="js/navigation.js"></script>
+<script src="js/recipes-table.js"></script>
 

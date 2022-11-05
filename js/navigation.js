@@ -1,3 +1,12 @@
+function showMenu() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
 function showPage(page){
     var pages = document.getElementsByClassName("pages");
     
