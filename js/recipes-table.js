@@ -6,6 +6,7 @@ var serverAdress = 'http://localhost:8080';
 var pageNumber = 1;
 var itemsOnPage = 6;
 var allRecipes = [];
+var step = 1;
 
 function loadRecipes() {
   fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}`)
@@ -98,10 +99,17 @@ function addRecipe() {
           <option value="intermediar">Intermediar</option>
           <option value="avansat">Avansat</option>
         </select>
+
+        <span>Method of preparation</span>
+        <div id="stepPlaceHolder">
+          <textarea class="step" placeholder="First step"></textarea>
+         </div>
+
+         <button id="addStep" onclick="addStep()">Next Step</button>
+          <div class="modal-footer"></div>
       </div>
-      <div class="modal-footer">
-      </div>
-    </div>
+    </div>  
+    
 
   </div>
   `;
@@ -114,9 +122,18 @@ function addRecipe() {
 
   span.onclick = function() {
     myModal.outerHTML = '';
-
+   step=1;
   }
 }
+
+function addStep(){
+  step++;
+  console.log('alabala')
+  var stepToAdd = `<textarea class="step" placeholder="Step ${step}"></textarea>`;
+
+  document.getElementById('stepPlaceHolder').innerHTML += stepToAdd;
+}
+
 
 function showRecipe(recipeName) {
   
