@@ -79,37 +79,45 @@ function addRecipe() {
         <h2>Add Recipe</h2>
       </div>
       <div class="modal-body">
-        <span>Nume:</span>
-        <input type="text" placeholder="nume" />
+        <span>Name:</span>
+        <input type="text" placeholder="Name" id="name" />
 
-        <span>Categorie</span>
+        <span>ImageURL</span>
+        <input type="text" placeholder="ImageURL" id="imageURL">
+
+        <span>Category</span>
         <select name="categorie" id="categorie">
-          <option value="felPrincipal">Fel principal</option>
-          <option value="aperitiv">Aperitiv</option>
-          <option value="ciorbe">Ciorbe</option>
+          <option value="felPrincipal">Main course</option>
+          <option value="aperitiv">Appetizers</option>
+          <option value="ciorbe">Soups</option>
           <option value="desert">Desert</option>
         </select>
 
-        <span>Timp</span><br>
-        <input type="number" min="1" placeholder="number" /><br><br>
+        <span>Time</span><br>
+        <input type="number" min="1" placeholder="Time" id="time" /><br><br>
 
-        <span>Nivel</span>
+        <span>Level</span>
         <select name="nivel" id="nivel">
-          <option value="incepator">Incepator</option>
+          <option value="incepator">Begginer</option>
           <option value="intermediar">Intermediar</option>
-          <option value="avansat">Avansat</option>
+          <option value="avansat">Advanced</option>
         </select>
 
         <span>Method of preparation</span>
-        <div id="stepPlaceHolder">
+        <div id="stepPlaceholder">
           <textarea class="step" placeholder="First step"></textarea>
-         </div>
+        </div>
 
-         <button id="addStep" onclick="addStep()">Next Step</button>
-          <div class="modal-footer"></div>
+        <button id="addStep" onclick="addStep()">Next step</button>
+      
+      
+      <div class="modal-footer">
+        <button class="save" onclick="save()">Save</button>
       </div>
-    </div>  
-    
+
+      
+
+    </div>
 
   </div>
   `;
@@ -122,18 +130,67 @@ function addRecipe() {
 
   span.onclick = function() {
     myModal.outerHTML = '';
-   step=1;
+    step = 1;
   }
 }
 
-function addStep(){
+function addStep(){    
+  var steps = document.getElementsByClassName("step"); 
+  var stepsValue = [];
+  for (i = 0; i < steps.length; i++){
+    stepsValue.push(steps[i].value);
+  }
+  
   step++;
-  console.log('alabala')
   var stepToAdd = `<textarea class="step" placeholder="Step ${step}"></textarea>`;
 
-  document.getElementById('stepPlaceHolder').innerHTML += stepToAdd;
+  document.getElementById("stepPlaceholder").innerHTML += stepToAdd;
+
+  for (i = 0; i < stepsValue.length; i++) {
+    document.getElementsByClassName("step")[i].value = stepsValue[i];
+  }
+
 }
 
+function save(){
+  var name = document.getElementById("name").value;
+  var img = document.getElementById("imageURL").value;
+  var categorie = document.getElementById("categorie").value;
+  var time = document.getElementById("time").value;
+  var nivel = document.getElementById("nivel").value;
+  var steps = document.getElementsByClassName("step");
+  var stepsValue = [];
+  for (i = 0; i < steps.length; i++){
+    stepsValue.push(steps[i].value);
+  }
+
+  var savedRecipe = createRecipe(name, img, categorie, time, nivel, stepsValue);
+
+  if (savedRecipe) {
+    myModal.outerHTML = '';
+    step = 1;
+  }
+
+  loadRecipes();
+
+}
+
+function createRecipe(name, img, categorie, time, nivel, stepsValue) {
+  return fetch("http://localhost:8080/recipes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      img,
+      categorie,
+      time,
+      nivel,
+      stepsValue,
+    }),
+  }).then((r) => r.json());
+}
 
 function showRecipe(recipeName) {
   
@@ -159,7 +216,7 @@ function showRecipe(recipeName) {
 
           <h3>Nivel: ${recipe.nivel}</h3>
 
-          <h2>Mod de preparare</h2><i class="fa-solid fa-kitchen-set"></i>
+          <h2>Mod de preparare</h2>
   `;
 
   for(i=0; i<recipe.modDePreparare.length; i++) {
