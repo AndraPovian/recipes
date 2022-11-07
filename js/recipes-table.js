@@ -6,7 +6,6 @@ var serverAdress = 'http://localhost:8080';
 var pageNumber = 1;
 var itemsOnPage = 6;
 var allRecipes = [];
-var step = 1;
 
 function loadRecipes() {
   fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}`)
@@ -116,7 +115,6 @@ function addRecipe() {
       </div>
 
       
-
     </div>
 
   </div>
@@ -132,6 +130,26 @@ function addRecipe() {
     myModal.outerHTML = '';
     step = 1;
   }
+
+  loadRecipes();
+
+}
+
+function createRecipe(name, img, categorie, time, nivel, stepsValue) {
+  return fetch("http://localhost:8080/recipes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      img,
+      categorie,
+      time,
+      nivel,
+      stepsValue,
+    }),
+  }).then((r) => r.json());
 }
 
 function addStep(){    
