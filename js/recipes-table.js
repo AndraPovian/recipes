@@ -6,6 +6,7 @@ var serverAdress = 'http://localhost:8080';
 var pageNumber = 1;
 var itemsOnPage = 6;
 var allRecipes = [];
+var step = 1;
 
 function loadRecipes() {
   fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}`)
@@ -130,8 +131,6 @@ function addRecipe() {
     myModal.outerHTML = '';
     step = 1;
   }
-
-  loadRecipes();
 
 }
 
