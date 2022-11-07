@@ -6,7 +6,6 @@ var serverAdress = 'http://localhost:8080';
 var pageNumber = 1;
 var itemsOnPage = 6;
 var allRecipes = [];
-var step = 1;
 
 function loadRecipes() {
   fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}`)
@@ -79,37 +78,33 @@ function addRecipe() {
         <h2>Add Recipe</h2>
       </div>
       <div class="modal-body">
-        <span>Nume:</span>
-        <input type="text" placeholder="nume" />
+        <span>Name:</span>
+        <input type="text" placeholder="Name" id="name" />
 
-        <span>Categorie</span>
+        <span>ImageURL</span>
+        <input type="text" placeholder="ImageURL" id="imageURL">
+
+        <span>Category</span>
         <select name="categorie" id="categorie">
-          <option value="felPrincipal">Fel principal</option>
-          <option value="aperitiv">Aperitiv</option>
-          <option value="ciorbe">Ciorbe</option>
+          <option value="felPrincipal">Main course</option>
+          <option value="aperitiv">Appetizers</option>
+          <option value="ciorbe">Soups</option>
           <option value="desert">Desert</option>
         </select>
 
-        <span>Timp</span><br>
-        <input type="number" min="1" placeholder="number" /><br><br>
+        <span>Time</span><br>
+        <input type="number" min="1" placeholder="Time" id="time" /><br><br>
 
-        <span>Nivel</span>
+        <span>Level</span>
         <select name="nivel" id="nivel">
-          <option value="incepator">Incepator</option>
+          <option value="incepator">Begginer</option>
           <option value="intermediar">Intermediar</option>
-          <option value="avansat">Avansat</option>
+          <option value="avansat">Advanced</option>
         </select>
-
-        <span>Method of preparation</span>
-        <div id="stepPlaceHolder">
-          <textarea class="step" placeholder="First step"></textarea>
-         </div>
-
-         <button id="addStep" onclick="addStep()">Next Step</button>
-          <div class="modal-footer"></div>
       </div>
-    </div>  
-    
+      <div class="modal-footer">
+      </div>
+    </div>
 
   </div>
   `;
@@ -122,8 +117,28 @@ function addRecipe() {
 
   span.onclick = function() {
     myModal.outerHTML = '';
-   step=1;
+
   }
+
+  loadRecipes();
+
+}
+
+function createRecipe(name, img, categorie, time, nivel, stepsValue) {
+  return fetch("http://localhost:8080/recipes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      img,
+      categorie,
+      time,
+      nivel,
+      stepsValue,
+    }),
+  }).then((r) => r.json());
 }
 
 function addStep(){
@@ -159,7 +174,7 @@ function showRecipe(recipeName) {
 
           <h3>Nivel: ${recipe.nivel}</h3>
 
-          <h2>Mod de preparare</h2><i class="fa-solid fa-kitchen-set"></i>
+          <h2>Mod de preparare</h2>
   `;
 
   for(i=0; i<recipe.modDePreparare.length; i++) {

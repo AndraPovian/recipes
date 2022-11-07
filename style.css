@@ -333,7 +333,18 @@ input[type=text], select, textarea {
 }
 
 .modal-footer {
-  padding: 2px 16px;
-  background-color: #5cb85c;
+  margin: 15px 10px 0 0; 
   color: white;
+  text-align: end;
+}
+
+
+.save {
+  background-color: #df3939;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
