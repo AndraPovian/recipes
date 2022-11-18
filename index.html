@@ -19,7 +19,54 @@
       </a>      
     </div>
 
-    <div id="home" class="pages"></div>
+    <div id="home" class="pages">
+      <!-- Slideshow container -->
+      <div class="slideshow-container">
+
+        <!-- Full-width images with number and caption text -->
+        <div class="mySlides fade">
+          <div class="numbertext">1 / 3</div>
+          <img src="./images/food/ciorba.jpg" style="width:100%; height: 50%; object-fit: contain;">
+          <div class="text">Ciorba ardeleneasca</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 3</div>
+          <img src="./images/food/mamaliga.jpg" style="width:100%; height: 50%; object-fit: contain;">
+          <div class="text">Mamaliga cu carnat</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 3</div>
+          <img src="./images/food/papanasi.jpg" style="width:100%; height: 50%; object-fit: contain;">
+          <div class="text">Papanasi</div>
+        </div>
+
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+      <br>
+
+      <!-- The dots/circles -->
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+
+      <h1 class="ml9">
+        <span class="text-wrapper">
+          <span class="letters">Welcome to recipes!</span>
+        </span>
+      </h1>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+
+
+
+    </div>
 
 
     <div id="recipes" class="pages"></div>
@@ -27,7 +74,7 @@
       <!-- CONTACT PAGE -->
     <div id="contact" class="pages">      
       <div class="container">
-        <form action="action_page.php">
+        <form>
       
           <label for="fname">First Name</label>
           <input type="text" id="fname" name="firstname" placeholder="Enter your name here">
@@ -41,7 +88,10 @@
           <label for="subject">Subject</label>
           <textarea id="subject" name="subject" placeholder="Write something..." style="height:200px"></textarea>
       
-          <input type="submit" value="Submit">
+          <button onclick="messageSubmit()">Submit</button>
+
+          
+           
           
         </form>
       </div>
@@ -58,7 +108,6 @@
             <div class="container">
               <h2>Andreea Diana Toader</h2>
               <p class="title">Accountant &amp; IT student</p>
-              <p>Some text that describes me: With GOD all things are possible.</p>
               <p>toaderandreea10@gmail.com</p>
             </div>
           </div>
@@ -70,7 +119,6 @@
             <div class="container">
               <h2>Dorin Povian</h2>
               <p class="title">Teacher &amp; IT student </p>
-              <p>Some text that describes me: I can do all things through Christ.</p>
               <p>dorian9212@yahoo.com</p>
             </div>
           </div>
@@ -82,7 +130,6 @@
             <div class="container">
               <h2>Andrada Elena Povian</h2>
               <p class="title">Nurse &amp; IT student</p>
-              <p>Some text that describes me: GOD above all.</p>
               <p>toader.andrada1996@gmail.com</p>              
             </div>
           </div>

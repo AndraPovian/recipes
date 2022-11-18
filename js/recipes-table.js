@@ -25,7 +25,8 @@ function displayRecipes(recipes, totalPages) {
   recipesPage += '<div class="row">';
 
   for(i = 0; i < recipes.length; i++) {
-    recipesPage += `<div class="column" onclick="showRecipe('${recipes[i].nume}')"><div class="card">`;
+    recipesPage += `<div class="column" onclick="showRecipe(event, '${recipes[i].nume}')"><div class="card">`;
+    recipesPage += `<h3 style="display: none;" id="recipeId">${recipes[i].id}</h3>`;
 
     recipesPage += `<img src="${recipes[i].img}" alt="img" style="width:40%">`;
 
@@ -41,8 +42,12 @@ function displayRecipes(recipes, totalPages) {
 
     recipesPage += '</div>';
 
+    recipesPage += `<button style="margin-bottom:10px">Update</button>`;
+
     recipesPage += '</div></div>';
   }
+
+  
 
   recipesPage += '</div>';
 
@@ -134,13 +139,14 @@ function addRecipe() {
 
 }
 
-function createRecipe(name, img, categorie, time, nivel, stepsValue) {
+function createRecipe(id, name, img, categorie, time, nivel, stepsValue) {
   return fetch("http://localhost:8080/recipes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      id,
       name,
       img,
       categorie,
@@ -169,7 +175,8 @@ function addStep(){
 
 }
 
-function save(){
+function save(isUpdate){
+  var id = document.getElementById("recipeId").innerHTML;
   var name = document.getElementById("name").value;
   var img = document.getElementById("imageURL").value;
   var categorie = document.getElementById("categorie").value;
@@ -181,8 +188,13 @@ function save(){
     stepsValue.push(steps[i].value);
   }
 
-  var savedRecipe = createRecipe(name, img, categorie, time, nivel, stepsValue);
-
+  var savedRecipe = null;
+  if (isUpdate) {
+    savedRecipe = updateRecipe (id, name, img, categorie, time, nivel, stepsValue);
+  } else {
+    savedRecipe = createRecipe(id, name, img, categorie, time, nivel, stepsValue);
+  }
+  
   if (savedRecipe) {
     myModal.outerHTML = '';
     step = 1;
@@ -192,13 +204,14 @@ function save(){
 
 }
 
-function createRecipe(name, img, categorie, time, nivel, stepsValue) {
+function updateRecipe(id, name, img, categorie, time, nivel, stepsValue) {
   return fetch("http://localhost:8080/recipes", {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      id,
       name,
       img,
       categorie,
@@ -209,9 +222,16 @@ function createRecipe(name, img, categorie, time, nivel, stepsValue) {
   }).then((r) => r.json());
 }
 
-function showRecipe(recipeName) {
+function showRecipe(event, recipeName) {
+
+  event.stopPropagation();
   
   var recipe = allRecipes.find((reteta) => reteta.nume == recipeName);
+
+  if (event.target.innerHTML === 'Update') {
+    update(recipe);
+    return false;
+  }
 
   var modal = `
   <div id="myModal" class="modal">
@@ -271,3 +291,149 @@ function page(pageNo) {
 }
 
   
+
+
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+
+
+
+function update(recipe){
+
+  console.log(recipe);
+  
+  var modal = `
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Add Recipe</h2>
+      </div>
+      <div class="modal-body">
+        <span>Name:</span>
+        <input type="text" placeholder="Name" id="name" value="${recipe.nume}"/>
+
+        <span>ImageURL</span>
+        <input type="text" placeholder="ImageURL" id="imageURL" value="${recipe.img}"/>
+
+        <span>Category</span>
+        <select name="categorie" id="categorie">
+          <option value="felPrincipal">Main course</option>
+          <option value="aperitiv">Appetizers</option>
+          <option value="ciorbe">Soups</option>
+          <option value="desert">Desert</option>
+        </select>
+
+        <span>Time</span><br>
+        <input type="number" min="1" placeholder="Time" id="time" value="${recipe.timp}" /><br><br>
+
+        <span>Level</span>
+        <select name="nivel" id="nivel">
+          <option value="incepator">Begginer</option>
+          <option value="intermediar">Intermediar</option>
+          <option value="avansat">Advanced</option>
+        </select>
+
+        <span>Method of preparation</span>
+        <div id="stepPlaceholder">`;
+
+
+        for(i=0; i<recipe.modDePreparare.length; i++) {
+          modal += `<h3>Pasul ${i + 1}</h3>`;
+          modal += `<textarea class="step" placeholder="First step">${recipe.modDePreparare[i]}</textarea>`;
+        }
+
+        step = recipe.modDePreparare.length;
+         
+        modal += `
+        </div>
+
+        <button id="addStep" onclick="addStep()">Next step</button>
+      
+      
+      <div class="modal-footer">
+        <button class="save" onclick="save('update')">Save</button>
+      </div>
+
+      
+    </div>
+
+  </div>
+  `;
+
+  document.getElementById('recipes').innerHTML += modal;
+
+  document.getElementById('categorie').value = recipe.categorie;
+
+  document.getElementById('nivel').value = recipe.nivel;
+
+  var myModal = document.getElementById('myModal');
+
+  var span = document.getElementsByClassName("close")[0];
+
+  span.onclick = function() {
+    myModal.outerHTML = '';
+    step = 1;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Wrap every letter in a span
+var textWrapper = document.querySelector('.ml9 .letters');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml9 .letter',
+    scale: [0, 1],
+    duration: 1500,
+    elasticity: 600,
+    delay: (el, i) => 45 * (i+1)
+  }).add({
+    targets: '.ml9',
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
