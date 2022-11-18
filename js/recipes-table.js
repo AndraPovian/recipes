@@ -7,9 +7,10 @@ var pageNumber = 1;
 var itemsOnPage = 6;
 var allRecipes = [];
 var step = 1;
+var filterField = null;
 
 function loadRecipes() {
-  fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}`)
+  fetch(serverAdress + `/recipes?page=${pageNumber}&items=${itemsOnPage}&filter=${filterField}`)
   .then((result) => result.json())
   .then((result) => {
     allRecipes = result.recipes;
@@ -21,6 +22,33 @@ function displayRecipes(recipes, totalPages) {
   document.getElementById('recipes').innerHTML = '';
 
   var recipesPage = '<h1>Recipes</h1>' + '<button class="buttonAdd" onclick="addRecipe()">Add Recipe</button>';
+
+  recipesPage += `<form style="display: inline-block;">
+  <select name="filter" id="filter" onchange="filterBy()">
+    <option value="">Filter by</option>`;
+
+    recipesPage += '<optgroup label="categorie">';
+
+    var categorii = [...new Set(recipes.map(item => item.categorie))].sort();
+
+
+    for (i=0; i<categorii.length; i++){
+      recipesPage += `<option value="${categorii[i]}">${categorii[i]}</option>`;
+    }
+
+    recipesPage += '</optgroup>';
+
+    recipesPage += '<optgroup label="nivel de dificultate">';
+
+    var nivele = [...new Set(recipes.map(item => item.nivel))].sort();
+
+    for (i=0; i<nivele.length; i++){
+      recipesPage += `<option value="${nivele[i]}">${nivele[i]}</option>`;
+    }
+
+  recipesPage += '</optgroup>';
+
+  recipesPage += `</select> </form>`;
 
   recipesPage += '<div class="row">';
 
@@ -42,6 +70,8 @@ function displayRecipes(recipes, totalPages) {
     recipesPage += '</div>';
 
     recipesPage += `<button style="margin-bottom:10px">Update</button>`;
+
+    recipesPage += `<button style="margin-bottom:10px">Delete</button>`;
 
     recipesPage += '</div></div>';
   }
@@ -69,6 +99,13 @@ function displayRecipes(recipes, totalPages) {
   pagination += '</div>';
 
   document.getElementById('recipes').innerHTML += pagination;
+}
+
+
+function filterBy(){
+  pageNumber = 0;
+  filterField = document.getElementById("filter").value;
+  loadRecipes();
 }
 
 function addRecipe() {
@@ -156,6 +193,17 @@ function createRecipe(id, name, img, categorie, time, nivel, stepsValue) {
   }).then((r) => r.json());
 }
 
+function deleteRecipe(id) {
+  return fetch(serverAdress + `/recipes?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((r) => r.json());
+}
+
+
+
 function addStep(){    
   var steps = document.getElementsByClassName("step"); 
   var stepsValue = [];
@@ -229,6 +277,12 @@ function showRecipe(event, recipeName) {
 
   if (event.target.innerHTML === 'Update') {
     update(recipe);
+    return false;
+  }
+
+  if (event.target.innerHTML === 'Delete') {
+    deleteRecipe(recipe.id);
+    loadRecipes();
     return false;
   }
 
