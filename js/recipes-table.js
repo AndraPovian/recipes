@@ -26,7 +26,6 @@ function displayRecipes(recipes, totalPages) {
 
   for(i = 0; i < recipes.length; i++) {
     recipesPage += `<div class="column" onclick="showRecipe(event, '${recipes[i].nume}')"><div class="card">`;
-    recipesPage += `<h3 style="display: none;" id="recipeId">${recipes[i].id}</h3>`;
 
     recipesPage += `<img src="${recipes[i].img}" alt="img" style="width:40%">`;
 
@@ -326,8 +325,6 @@ function showSlides(n) {
 
 
 function update(recipe){
-
-  console.log(recipe);
   
   var modal = `
   <div id="myModal" class="modal">
@@ -339,6 +336,7 @@ function update(recipe){
         <h2>Add Recipe</h2>
       </div>
       <div class="modal-body">
+        <h3 style="display: none;" id="recipeId">${recipe.id}</h3>
         <span>Name:</span>
         <input type="text" placeholder="Name" id="name" value="${recipe.nume}"/>
 
@@ -405,17 +403,6 @@ function update(recipe){
     step = 1;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
