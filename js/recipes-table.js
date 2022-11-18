@@ -14,11 +14,11 @@ function loadRecipes() {
   .then((result) => result.json())
   .then((result) => {
     allRecipes = result.recipes;
-    displayRecipes(result.recipes, result.totalPages);
+    displayRecipes(result.recipes, result.totalPages, result.allRecipes);
   });
 }
 
-function displayRecipes(recipes, totalPages) {
+function displayRecipes(recipes, totalPages, allRecipes) {
   document.getElementById('recipes').innerHTML = '';
 
   var recipesPage = '<h1>Recipes</h1>' + '<button class="buttonAdd" onclick="addRecipe()">Add Recipe</button>';
@@ -29,21 +29,23 @@ function displayRecipes(recipes, totalPages) {
 
     recipesPage += '<optgroup label="categorie">';
 
-    var categorii = [...new Set(recipes.map(item => item.categorie))].sort();
+    var categorii = [...new Set(allRecipes.map(item => item.categorie))].sort();
 
 
     for (i=0; i<categorii.length; i++){
-      recipesPage += `<option value="${categorii[i]}">${categorii[i]}</option>`;
+      if (categorii[i] === filterField) recipesPage += `<option value="${categorii[i]}" selected>${categorii[i]}</option>`;
+      else recipesPage += `<option value="${categorii[i]}">${categorii[i]}</option>`;
     }
 
     recipesPage += '</optgroup>';
 
     recipesPage += '<optgroup label="nivel de dificultate">';
 
-    var nivele = [...new Set(recipes.map(item => item.nivel))].sort();
+    var nivele = [...new Set(allRecipes.map(item => item.nivel))].sort();
 
     for (i=0; i<nivele.length; i++){
-      recipesPage += `<option value="${nivele[i]}">${nivele[i]}</option>`;
+      if (nivele[i] === filterField) recipesPage += `<option value="${nivele[i]}" selected>${nivele[i]}</option>`;
+      else recipesPage += `<option value="${nivele[i]}">${nivele[i]}</option>`;
     }
 
   recipesPage += '</optgroup>';
@@ -98,12 +100,16 @@ function displayRecipes(recipes, totalPages) {
 
   pagination += '</div>';
 
+  // if (filterField !== null) {
+  //   document.getElementById("filter").value = filterField;
+  // }
+
   document.getElementById('recipes').innerHTML += pagination;
 }
 
 
 function filterBy(){
-  pageNumber = 0;
+  pageNumber = 1;
   filterField = document.getElementById("filter").value;
   loadRecipes();
 }
