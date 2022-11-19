@@ -21,5 +21,5 @@ The team is divided on different components of the project, as follows:
 - [ ] Filters and search on recipes
 
 
-## Live'
+## Live
 [Demo](https://github.com/AndraPovian/recipes)
