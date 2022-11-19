@@ -24,7 +24,7 @@ function displayRecipes(recipes, totalPages, allRecipes) {
   var recipesPage = '<h1>Recipes</h1>' + '<button class="buttonAdd" onclick="addRecipe()">Add Recipe</button>';
 
   recipesPage += `<form style="display: inline-block;">
-  <select name="filter" id="filter" onchange="filterBy()">
+  <select name="filter" id="filter" class="buttonFilter" onchange="filterBy()">
     <option value="">Filter by</option>`;
 
     recipesPage += '<optgroup label="categorie">';
@@ -71,9 +71,9 @@ function displayRecipes(recipes, totalPages, allRecipes) {
 
     recipesPage += '</div>';
 
-    recipesPage += `<button style="margin-bottom:10px">Update</button>`;
+    recipesPage += `<button style="margin-bottom:10px" class="updel">Update</button>`;
 
-    recipesPage += `<button style="margin-bottom:10px">Delete</button>`;
+    recipesPage += `<button style="margin-bottom:10px" class="updel">Delete</button>`;
 
     recipesPage += '</div></div>';
   }
