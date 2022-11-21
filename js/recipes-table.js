@@ -126,6 +126,7 @@ function addRecipe() {
         <h2>Add Recipe</h2>
       </div>
       <div class="modal-body">
+        <h3 style="display: none;" id="recipeId">${allRecipes[allRecipes.length-1].id + 1}</h3>
         <span>Name:</span>
         <input type="text" placeholder="Name" id="name" />
 
