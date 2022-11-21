@@ -22,4 +22,4 @@ The team is divided on different components of the project, as follows:
 
 
 ## Live
-[Demo](https://github.com/AndraPovian/recipes-api)
+[Demo](https://andrapovian.github.io/recipes/)
