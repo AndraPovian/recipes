@@ -11,11 +11,15 @@ Team Project
 The team is divided on different components of the project, as follows:
 
 <b>Andrada</b>
-- CRUD on recipes
+- [ ] CRUD on recipes
 
 <b>Andreea</b>
-- Paginated recipes
-- Project design
+- [ ] Paginated recipes
+- [ ] Project design
 
 <b>Dorin</b>
-- Filters and search on recipes
+- [ ] Filters and search on recipes
+
+
+## Live
+[Demo](https://github.com/AndraPovian/recipes-api)
