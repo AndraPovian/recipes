@@ -1,7 +1,7 @@
 // Functions tied to Recipes Table functionality
 // Created by Andreea
 
-var serverAdress = 'http://localhost:8080';
+var serverAdress = 'https://andrapovian.github.io/recipes-api';
 
 var pageNumber = 1;
 var itemsOnPage = 6;
@@ -183,7 +183,7 @@ function addRecipe() {
 }
 
 function createRecipe(id, name, img, categorie, time, nivel, stepsValue) {
-  return fetch("http://localhost:8080/recipes", {
+  return fetch(serverAdress + "/recipes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -259,7 +259,7 @@ function save(isUpdate){
 }
 
 function updateRecipe(id, name, img, categorie, time, nivel, stepsValue) {
-  return fetch("http://localhost:8080/recipes", {
+  return fetch(serverAdress + "/recipes", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
